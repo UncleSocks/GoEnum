@@ -117,11 +117,12 @@ sort -u -o $ALIVE $ALIVE
 echo [+] Checking for possible subdomain takeover with subjack....
 subjack -w $OUTPUT -t 100 -timeout 30 -ssl -v 3 -o $SUBJACK_OUT
 
-echo [+] Scanning open ports with nmap...
-if [ ! -d $NMAP_DIR ]; then
-       mkdir $NMAP_DIR
-fi
-nmap -iL $OUTPUT -T4 -oN $NMAP_OUT
+#Uncomment this section to include Nmap scan.
+#echo [+] Scanning open ports with nmap...
+#if [ ! -d $NMAP_DIR ]; then
+#       mkdir $NMAP_DIR
+#fi
+#nmap -iL $OUTPUT -T4 -oN $NMAP_OUT
 
 echo [+] Scraping wayback data...
 if [ ! -d $WAYBACK_DIR ]; then
