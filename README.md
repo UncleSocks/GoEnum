@@ -7,6 +7,7 @@ sudo -E ./goenum.sh
 ```
 
 ## Dependencies
+The script uses the following Go-based web enumeration tools:
 - AssetFinder: https://github.com/tomnomnom/assetfinder
 - AMass v4.2.0: https://github.com/owasp-amass/amass
 - HttProbe: https://github.com/tomnomnom/httprobe
