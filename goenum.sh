@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 
 DOMAIN=$1
 DIR=$DOMAIN/recon
@@ -76,6 +76,13 @@ function check_dependencies() {
                 go install github.com/tomnomnom/waybackurls@latest
         fi
         echo [+] waybackurls found.
+
+        if [ ! "$(command -v gowitness)" ]; then
+                echo [-] gowitness not installed in the system...
+                echo [+] Attempting to download and install gowitness
+                go install github.com/sensepost/gowitness@latest
+        fi
+        echo [+] gowitness found.
 }
 
 echo [+] Checking dependencies...
@@ -117,7 +124,7 @@ sort -u -o $ALIVE $ALIVE
 echo [+] Checking for possible subdomain takeover with subjack....
 subjack -w $OUTPUT -t 100 -timeout 30 -ssl -v 3 -o $SUBJACK_OUT
 
-#Uncomment this section to include Nmap scan.
+#Uncomment this section to include Nmap scanning.
 #echo [+] Scanning open ports with nmap...
 #if [ ! -d $NMAP_DIR ]; then
 #       mkdir $NMAP_DIR
@@ -157,5 +164,8 @@ while IFS= read -r line; do
                 "json") echo $line >> $JSON_OUT | sort -o $JSON_OUT $JSON_OUT;;
         esac
 done < $WAYBACK_OUT
+
+echo [+] Screenshotting alive websites with gowitness
+gowitness scan file -f $ALIVE
 
 echo [+] Enumeration of $DOMAIN domain complete
